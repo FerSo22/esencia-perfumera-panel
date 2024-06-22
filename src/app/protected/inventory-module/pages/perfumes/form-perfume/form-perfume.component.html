@@ -1,0 +1,274 @@
+<div class="sub-container">
+    <div class="form-header relative">
+        <span
+            (click)="back()"
+            pTooltip="Volver"
+            showDelay="200"
+            positionStyle="fixed"
+            positionLeft="10"
+            class="back absolute flex h-full align-items-center cursor-pointer"
+        >
+            <i class="fa-solid fa-chevron-left text-4xl"></i>
+        </span>
+        <h1 class="text-center">{{ title }} perfume</h1>
+    </div>
+    <div class="container-form">
+        <form (ngSubmit)="save()" [formGroup]="formPerfume" autocomplete="off">
+            <div class="flex gap-4 mb-3">
+                <!-- form-column w-6 sm:w-12 -->
+                <!-- grid col-6 -->
+                <div class="flex flex-column align-items-center w-6">
+                    <div class="flex flex-column gap-2 w-12 md:w-10 mb-3">
+                        <label for="name">Nombre del Perfume</label>
+                        <input
+                            pInputText
+                            id="name"
+                            formControlName="name"
+                            class="w-full"
+                            [ngClass]="setInvalid('name')"
+                        />
+                        <!-- [msg]="getInputErrorMsg('name')" -->
+                        <span
+                            errorMsg
+                            [isValid]="!validInput('name')"
+                            [errors]="getInputErrors('name')"
+                            class="text-xs"
+                        >
+                        </span>
+                    </div>
+                    <div class="flex flex-column gap-2 w-12 md:w-10 mb-3">
+                        <label for="price"> Precio </label>
+                        <p-inputNumber
+                            inputId="price"
+                            formControlName="price"
+                            prefix="S/ "
+                            mode="decimal"
+                            locale="en-US"
+                            [maxFractionDigits]="2"
+                            [useGrouping]="false"
+                            class="w-full"
+                            [ngClass]="setInvalid('price')"
+                        />
+                        <!-- [msg]="getInputErrorMsg('price')" -->
+                        <span
+                            errorMsg
+                            [isValid]="!validInput('price')"
+                            [errors]="getInputErrors('price')"
+                            class="text-xs"
+                        >
+                        </span>
+                    </div>
+                    <div class="flex flex-column gap-2 w-12 md:w-10 mb-3">
+                        <label for="stock">Stock</label>
+                        <p-inputNumber
+                            inputId="stock"
+                            formControlName="stock"
+                            [useGrouping]="false"
+                            class="w-full"
+                            [ngClass]="setInvalid('stock')"
+                        />
+                        <!-- [msg]="getInputErrorMsg('stock')" -->
+                        <span
+                            errorMsg
+                            [isValid]="!validInput('stock')"
+                            [errors]="getInputErrors('stock')"
+                            class="text-xs"
+                        >
+                        </span>
+                    </div>
+                    <div class="flex flex-column gap-2 w-12 md:w-10 mb-3">
+                        <label for="ml">Cantidad (ml)</label>
+                        <p-inputNumber
+                            inputId="ml"
+                            formControlName="ml"
+                            suffix="ml"
+                            [useGrouping]="false"
+                            class="w-full"
+                            [ngClass]="setInvalid('ml')"
+                        />
+                        <!-- [msg]="getInputErrorMsg('ml')" -->
+                        <span
+                            errorMsg
+                            [isValid]="!validInput('ml')"
+                            [errors]="getInputErrors('ml')"
+                            class="text-xs"
+                        >
+                        </span>
+                    </div>
+                    <div class="flex flex-column gap-2 w-12 md:w-10 mb-3">
+                        <span>Marca</span>
+                        <div class="flex justify-content-between w-full gap-1">
+                            <p-dropdown
+                                inputId="brand_id"
+                                formControlName="brand_id"
+                                [options]="brands"
+                                optionLabel="name"
+                                optionValue="id"
+                                placeholder="-- Seleccione una marca --"
+                                class="w-10"
+                                [ngClass]="setInvalid('brand_id')"
+                            />
+                            <p-button
+                                (click)="visible = true"
+                                icon="pi pi-plus"
+                            >
+                            </p-button>
+                        </div>
+                        <!-- [msg]="getInputErrorMsg('brand_id')" -->
+                        <span
+                            errorMsg
+                            [isValid]="!validInput('brand_id')"
+                            [errors]="getInputErrors('brand_id')"
+                            class="text-xs"
+                        >
+                        </span>
+                    </div>
+                    <div class="flex flex-column gap-2 w-12 md:w-10 mb-3">
+                        <span>Género</span>
+                        <p-dropdown
+                            inputId="gender_id"
+                            formControlName="gender_id"
+                            [options]="genders"
+                            optionLabel="name"
+                            optionValue="id"
+                            placeholder="-- Seleccione el género --"
+                            class="w-full"
+                            [ngClass]="setInvalid('gender_id')"
+                        />
+                        <!-- [msg]="getInputErrorMsg('gender_id')" -->
+                        <span
+                            errorMsg
+                            [isValid]="!validInput('gender_id')"
+                            [errors]="getInputErrors('gender_id')"
+                            class="text-xs"
+                        >
+                        </span>
+                    </div>
+                </div>
+                <div class="flex flex-column align-items-center w-6">
+                    <div
+                        class="flex flex-column gap-2 w-12 md:w-10 mb-3 text-center"
+                    >
+                        <span class="text-left">
+                            Imágenes
+                            <small>(Máximo 2 con un peso máximo de 1MB entre ambas)</small>
+                        </span>
+                        <span
+                            class="text-xs text-left"
+                            [ngClass]="getSizeLimitClass()">
+                            Tamaño total: {{ (imagesTotalSize / 1024 / 1024).toFixed(2) }}MB
+                        </span>
+                        <p-fileUpload
+                            #fileUpload
+                            chooseLabel="Subir"
+                            cancelLabel="Quitar todo"
+                            cancelStyleClass="bg-red-400 border-red-400"
+                            removeStyleClass="bg-red-400 border-red-400"
+                            (onSelect)="onFileSelect($event)"
+                            (onRemove)="onFileRemove($event)"
+                            (onClear)="clearAllFiles()"
+                            [multiple]="true"
+                            [customUpload]="true"
+                            [showUploadButton]="false"
+                            fileLimit="2"
+                            invalidFileLimitMessageSummary=""
+                            invalidFileLimitMessageDetail="Solo se permiten máximo 2 imágenes por perfume"
+                            accept=".jpg,.jpeg,.png,.webp,.svg"
+                            invalidFileTypeMessageSummary=""
+                            invalidFileTypeMessageDetail="Solo se permiten imágenes con los formatos: jpg, jpeg, png, webp y svg"
+                            maxFileSize="1000000"
+                            invalidFileSizeMessageSummary=""
+                            invalidFileSizeMessageDetail="El peso de las dos imágenes juntas no debe exceder 1MB"
+                        >
+                        <!-- <ng-template pTemplate="content">
+                                @if(isEdit) {
+                                    <div class="p-fileupload-files ng-star-inserted">
+                                        <div class="ng-star-inserted">
+                                            @for (image of existingImages; track $index) {
+                                                <div class="p-fileupload-row ng-star-inserted">
+                                                    <div>
+                                                        <img
+                                                            [src]="image.url"
+                                                            width="50"
+                                                            class="ng-star-inserted">
+                                                    </div>
+                                                    <div class="p-fileupload-filename">
+                                                        {{ image.file_name }}
+                                                    </div>
+                                                    <div>{{ image.size / 1024 | number:'1.0-3' }} KB</div>
+                                                    <div>
+                                                        <button
+                                                            (click)="removeExistingImage(image.file_name)"
+                                                            type="button"
+                                                            pbutton
+                                                            class="p-element p-button-icon-only bg-red-400 border-red-400 p-button p-component">
+                                                            <span class="pi pi-times"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            </ng-template> -->
+                        </p-fileUpload>
+                        <span
+                            errorMsg
+                            [isValid]="!validInput('images')"
+                            [errors]="getInputErrors('images')"
+                            class="text-xs text-left"
+                        >
+                        </span>
+                    </div>
+                    <div class="flex flex-column gap-2 w-12 md:w-10 mb-3">
+                        <span>
+                            Descripción
+                            <small [ngClass]="getCharactersLimitClass()">
+                                (max.
+                                {{
+                                    formPerfume.get("description")?.value
+                                        ?.length || 0
+                                }}
+                                / {{ descriptionMax }}
+                                )
+                            </small>
+                        </span>
+                        <textarea
+                            rows="6"
+                            class="no-resize"
+                            pInputTextarea
+                            formControlName="description"
+                            [ngClass]="setInvalid('description')"
+                        ></textarea>
+                        <!-- [errors]="getInputErrors('description')" -->
+                        <span
+                            errorMsg
+                            msg="Este campo es obligatorio"
+                            [isValid]="!validInput('description')"
+                            class="text-xs"
+                        >
+                        </span>
+                        <!-- <small [ngClass]="getCharactersLimitClass()">
+                            Caracteres:
+                            {{ formPerfume.get("description")?.value?.length || 0 }}
+                        </small> -->
+                    </div>
+                </div>
+            </div>
+            <div class="w-12 text-center">
+                <p-button
+                    type="ngSubmit"
+                    label="Guardar"
+                    [disabled]="submitting">
+                </p-button>
+            </div>
+        </form>
+    </div>
+    <app-brand-modal
+        title="Registrar nueva marca"
+        field="Marca"
+        [(visible)]="visible"
+        (brandAdded)="onBrandAdded()"
+    >
+    </app-brand-modal>
+</div>

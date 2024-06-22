@@ -1,1 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+
+* {
+    /* margin: 0; */
+    box-sizing: border-box;
+}
+
+body {
+    min-width: 768px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    font-family: "Roboto";
+}
+
+ul {
+    padding: 0;
+}
+
+.p-toolbar {
+    background: #203453;
+    border: none;
+    border-radius: 0;
+}
+
+.w-full .p-inputtext {
+    width: 100%;
+}
+
+.w-full .p-inputnumber {
+    width: 100%;
+}
+
+.w-full .p-dropdown {
+    width: 100%;
+}
+/* @media (max-width: 768px) {
+    .d-label .p-button-label {
+        display: none;
+    }
+
+    .d-label .p-button-icon {
+        margin: 0;
+    }
+} */

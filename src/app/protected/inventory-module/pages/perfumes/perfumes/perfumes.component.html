@@ -1,0 +1,164 @@
+<div class="sub-container">
+    <div class="flex align-items-center justify-content-between">
+        <div>
+            <p-button
+                type="button"
+                icon="pi pi-chevron-left"
+                (click)="prev()"
+                [disabled]="isFirstPage()"
+                styleClass="p-button-text"/>
+            <p-button
+                type="button"
+                icon="pi pi-chevron-right"
+                (click)="next()"
+                [disabled]="isLastPage()"
+                styleClass="p-button-text"/>
+        </div>
+        <h2 class="table-title">
+            Perfumes
+        </h2>
+        <div>
+            <p-button
+                (click)="reset()"
+                icon="pi pi-refresh"
+                class="mr-3"
+            />
+            <p-button
+                [routerLink]="['agregar']"
+                label="Agregar perfume"
+                icon="pi pi-plus"
+                severity="success"
+                styleClass="d-label"
+            />
+        </div>
+    </div>
+
+    @if(!loading && !isEmptyPerfumes()) {
+        <p-table
+            [value]="perfumes"
+            [paginator]="!loading && !isEmptyPerfumes()"
+            [rows]="rows"
+            [first]="first"
+            [totalRecords]="totalPerfumes"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Mostrando {rows} registros. Total: {totalRecords}"
+            (onPage)="onPageChange($event)"
+            styleClass="p-datatable-striped">
+            <!-- <ng-template pTemplate="caption">
+            </ng-template> -->
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th
+                            width="60px"
+                            class="text-center">
+                            #
+                        </th>
+                        <th
+                            width="160px"
+                            class="text-center">
+                            Imagen
+                        </th>
+                        <th
+                            class="text-center">
+                            Nombre
+                        </th>
+                        <!-- <th>Image</th> -->
+                        <th
+                            width="180px"
+                            class="text-center">
+                            Precio
+                        </th>
+                        <th
+                            width="180px"
+                            class="text-center">
+                            Género
+                        </th>
+                        <th
+                            width="180px"
+                            class="text-center">
+                            Estado
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-perfume>
+                    <tr>
+                        <td class="text-center">
+                            {{ perfume.id }}
+                        </td>
+                        <td class="text-center">
+                            <img [src]="perfume.images[0].url"
+                                class="img-perfume">
+                            <!-- <img [src]="
+                                'https://res.cloudinary.com/dlxgdalys/image/upload/w_' +
+                                imageSize +
+                                ',h_' +
+                                imageSize +
+                                '/v1717305182/esencia_perfumera/perfumes/default.png'
+                            "> -->
+                        </td>
+                        <td>
+                            <a
+                                [routerLink]="['editar', perfume.id]"
+                                [pTooltip]="'Editar ' + perfume.name"
+                                showDelay="800"
+                                positionStyle="fixed"
+                                positionLeft="10"
+                                class="link-edit">
+                                {{ perfume.name }}
+                            </a>
+                        </td>
+                        <!-- <td>
+                            <img
+                                [src]="
+                                    'https://primefaces.org/cdn/primeng/images/demo/perfume/' +
+                                    perfume.image
+                                "
+                                [alt]="perfume.name"
+                                width="100"
+                                class="shadow-4"
+                            />
+                        </td> -->
+                        <td class="text-center">
+                            {{ perfume.price | currency : "PEN" : "S/. " }}
+                        </td>
+                        <td class="text-center">
+                            <p-tag
+                                [value]="perfume.gender.name"
+                                [severity]="getTagColor(perfume.gender.id)"
+                            >
+                            </p-tag>
+                        </td>
+                        <td class="text-center">
+                            <p-inputSwitch
+                                [(ngModel)]="perfume.status"
+                                (onChange)="togglePerfumeStatus(perfume)"
+                                styleClass="success"/>
+                        </td>
+                    </tr>
+                </ng-template>
+
+            <!-- <ng-template pTemplate="summary">
+                <div class="flex align-items-center justify-content-between">
+                    Total de perfumes:
+                    {{ perfumes ? perfumes.length : 0 }}
+                </div>
+                <div class="flex align-items-center justify-content-end">
+                    <span class="mx-1 text-color">Items per page: </span>
+
+                </div>
+            </ng-template> -->
+        </p-table>
+    }
+
+    @if(!loading && isEmptyPerfumes()) {
+        <p-card>
+            <p class="text-center text-xl font-semibold">No se encontraron perfumes registrados</p>
+        </p-card>
+    }
+
+    @if(loading) {
+        <div class="card flex justify-content-center mt-4">
+            <p-progressSpinner ariaLabel="loading"/>
+        </div>
+    }
+</div>

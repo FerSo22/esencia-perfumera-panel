@@ -1,0 +1,26 @@
+/* @media (max-width: 768px) {
+    .table-title {
+        display: none;
+    }
+} */
+
+.table-title {
+    color: #203453;
+}
+
+.img-perfume {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.link-edit {
+    color: #374151;
+    text-decoration: none;
+    transition: all 0.5s ease-in-out;
+}
+
+.link-edit:hover {
+    font-weight: bold;
+    text-decoration: underline 1px #374151;
+}

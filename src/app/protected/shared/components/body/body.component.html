@@ -1,0 +1,13 @@
+<div
+    [ngClass]="getBodyClass()"
+    class="body">
+    <div class="container-header">
+        <app-header
+            [collapsed]="collapsed"
+            [screenWidth]="screenWidth">
+        </app-header>
+    </div>
+    <div class="container-main">
+        <router-outlet></router-outlet>
+    </div>
+</div>

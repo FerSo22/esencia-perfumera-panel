@@ -1,0 +1,27 @@
+.header {
+    position: fixed;
+    width: calc(100% - 5rem);
+    top: 0;
+    right: 0;
+    z-index: 1;
+    transition: all 0.5s ease;
+}
+
+.header-trimmed {
+    width: calc(100% - 16.5rem);
+}
+
+.header-md-screen {
+    width: calc(100 - 5rem);
+}
+
+.toolbar-logo {
+    height: 50px;
+}
+
+.toolbar-logo img {
+    /* width: 100%; */
+    width: auto;
+    height: 100%;
+    border-radius: 10px;
+}

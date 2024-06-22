@@ -1,0 +1,28 @@
+<header
+    [ngClass]="getHeaderClass()"
+    class="header">
+    <p-toolbar>
+        <ng-template pTemplate="start">
+            <div class="toolbar-logo">
+                <img src="./assets/img/logo_transparent_horizontal.png" />
+            </div>
+        </ng-template>
+        <ng-template pTemplate="center">
+            <div class="flex flex-wrap align-items-center gap-3">
+                <!-- TODO: COLOCAR UN INPUT DE BÚSQUEDA GLOBAL -->
+            </div>
+        </ng-template>
+        <ng-template pTemplate="end">
+            <div class="flex align-items-center gap-2">
+                <!-- TODO: IMÁGEN DE USUARIO // PRÓXIMAMENTE... -->
+                <!-- <p-avatar
+                    image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+                    shape="circle"
+                /> -->
+                <span class="font-bold text-bluegray-50">
+                    Nombre de Usuario :v
+                </span>
+            </div>
+        </ng-template>
+    </p-toolbar>
+</header>

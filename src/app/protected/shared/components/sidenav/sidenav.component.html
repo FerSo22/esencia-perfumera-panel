@@ -1,0 +1,111 @@
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
+    <div class="logo-container">
+        <button
+            (click)="toggleSidenav()"
+            class="logo">
+            <!-- <img src="./assets/img/logo.png" class="logo-img"> -->
+            <!-- <img src="./assets/img/logo-horizontal.png" class="logo-img"> -->
+            EP
+        </button>
+
+        @if(collapsed) {
+            <div
+                @fadeInOut
+                class="logo-text">
+                Panel
+            </div>
+
+            <button
+                @fadeInOut
+                (click)="closeSidenav()"
+                class="btn-close">
+                <i class="fa-solid fa-times fa-xmark"></i>
+            </button>
+        }
+    </div>
+
+    <div class="scrollwrap scrollwrap_delayed">
+        <ul class="sidenav-nav">
+            @for (item of sidenavItems; track $index;) {
+                <li class="sidenav-nav__item">
+                    @if(item.items && item.items.length > 0) {
+                        <a
+                            (click)="handleClick(item)"
+                            [ngClass]="getActiveClass(item)"
+                            class="sidenav-nav__link">
+                            <i
+                                [class]="item.icon"
+                                class="sidenav-link__icon">
+                            </i>
+                            @if(collapsed) {
+                                <span class="sidenav-link__text">
+                                    {{ item.title }}
+                                </span>
+                                <i
+                                    [ngClass]="!item.expanded ? 'pi pi-chevron-right' : 'pi pi-chevron-down'"
+                                    class="menu-collapse__icon">
+                                </i>
+                            }
+                        </a>
+                    } @else {
+                        <a
+                            [routerLink]="[item.path]"
+                            routerLinkActive="active"
+                            [routerLinkActiveOptions]="{ exact: true }"
+                            class="sidenav-nav__link">
+                            <i
+                                [class]="item.icon"
+                                class="sidenav-link__icon">
+                            </i>
+                            @if(collapsed) {
+                                <span class="sidenav-link__text">
+                                    {{ item.title }}
+                                </span>
+                            }
+                        </a>
+                    }
+
+                    @if(collapsed && item.items && item.items.length > 0) {
+                        <div>
+                            <app-sublevel-menu
+                                [sidenavItem]="item"
+                                [collapsed]="collapsed"
+                                [multiple]="multiple"
+                                [expanded]="item.expanded">
+                            </app-sublevel-menu>
+                        </div>
+                    }
+                </li>
+            }
+        </ul>
+    </div>
+
+
+    <!-- ANTES DE IMPLEMENTAR EL MULTINIVEL -->
+    <!-- <ul class="sidenav-nav">
+        @for (item of sidenavItems; track $index;) {
+            <li class="sidenav-nav__item">
+                <a
+                    [routerLink]="[item.path]"
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    class="sidenav-nav__link">
+                    <i
+                        [class]="item.icon"
+                        class="sidenav-link__icon">
+                    </i>
+                    @if(collapsed) {
+                        <span class="sidenav-link__text">
+                            {{ item.title }}
+                        </span>
+                    }
+                </a>
+                <app-sublevel-menu
+                    [sidenavItem]="item"
+                    [collapsed]="collapsed"
+                    >
+                </app-sublevel-menu>
+            </li>
+        }
+    </ul> -->
+</div>

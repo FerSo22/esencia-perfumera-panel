@@ -1,0 +1,11 @@
+.no-resize {
+    resize: none;
+}
+
+.back i {
+    color: #203453;
+}
+
+.back:hover i {
+    color: #3B82F6;
+}
