@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 
 import { Observable, catchError, map, of, pipe } from 'rxjs';
 
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment.prod';
+// import { environment } from '../../../../environments/environment';
 
 import {
     APIPerfumeResponse,

@@ -20,7 +20,7 @@ export class SidenavService {
                 //     icon: "fa-solid fa-certificate"
                 // }
             ]
-        }
+        },
     ]
 
     get sidenav(): SidenavItem[] {
